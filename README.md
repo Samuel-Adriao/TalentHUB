@@ -9,7 +9,7 @@ O sistema tem como objetivo permitir o gerenciamento de candidatos, vagas, candi
 ## Linguagem e plataforma
 
 * **Java** — linguagem de programação principal do sistema.
-* **JDK — kit necessário para desenvolvimento e execução das aplicações Java.
+* **JDK** — kit necessário para desenvolvimento e execução das aplicações Java.
 * **JavaFX** — framework utilizado para desenvolvimento da interface gráfica do sistema.
 
 ## Banco de dados
