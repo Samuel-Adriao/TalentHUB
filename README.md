@@ -92,6 +92,7 @@ O sistema tem como objetivo permitir o gerenciamento de candidatos, vagas, candi
 
 A comunicação entre os principais componentes do sistema será realizada da seguinte maneira:
 
+```text
 ┌─────────────────────────┐
 │       JavaFX            │
 │   Interface gráfica     │
@@ -114,7 +115,7 @@ A comunicação entre os principais componentes do sistema será realizada da se
 │    MySQL Server         │
 │      Banco de dados     │
 └─────────────────────────┘
-
+```
 
 O **Maven** será utilizado para gerenciar o projeto e suas dependências, incluindo bibliotecas como JavaFX e MySQL Connector/J.
 
