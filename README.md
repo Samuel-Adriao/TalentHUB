@@ -34,14 +34,14 @@ O sistema tem como objetivo permitir o gerenciamento de candidatos, vagas, candi
 1. **Extension Pack for Java** — Microsoft
    Conjunto de extensões que fornece suporte ao desenvolvimento Java no VS Code, incluindo recursos de execução, depuração, testes e gerenciamento de projetos Maven.
 
-2. **SQLTools** — Matheus Teixeira
-   Extensão utilizada para trabalhar com bancos de dados SQL diretamente pelo VS Code.
+2. **SQLTools** — Matheus Teixeira: 
+   Utilizada para trabalhar com bancos de dados SQL diretamente pelo VS Code.
 
-3. **SQLTools MySQL/MariaDB Driver** — Matheus Teixeira
+4. **SQLTools MySQL/MariaDB Driver** — Matheus Teixeira: 
    Driver utilizado pelo SQLTools para estabelecer conexão com bancos de dados MySQL/MariaDB.
 
-4. **GitLens — Git supercharged** — GitKraken
-   Extensão que fornece recursos adicionais para utilização e visualização do histórico do Git.
+5. **GitLens — Git supercharged** — GitKraken: 
+   Fornece recursos adicionais para utilização e visualização do histórico do Git.
 
 ---
 
