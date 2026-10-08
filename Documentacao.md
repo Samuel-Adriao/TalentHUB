@@ -6,7 +6,6 @@
 
 O sistema deve permitir que novos candidatos realizem seu cadastro informando, no mínimo:
 
-* Nome completo;
 * E-mail;
 * Senha;
 * Confirmação da senha.
