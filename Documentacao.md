@@ -50,29 +50,24 @@ O candidato deve poder preencher e consultar seu perfil profissional.
 
 O perfil deve conter:
 
-* Nome;
-* E-mail;
-* Tipo de pessoa;
-* CPF/CNPJ;
-* Data de nascimento;
-* Telefone;
-* CEP;
-* Logradouro;
-* Número;
-* Complemento;
-* Bairro;
-* Cidade;
-* Estado;
-* Formação;
-* Experiência;
-* Currículo em PDF.
+* Nome
+* E-mail
+* Tipo de pessoa
+* CPF
+* Data de nascimento
+* Telefone
+* CEP
+* Logradouro
+* Número
+* Complemento
+* Bairro
+* Cidade
+* Estado
+* Formação
+* Experiência
+* Currículo em PDF
 
-O tipo de pessoa deve permitir:
-
-* Pessoa Física;
-* Pessoa Jurídica.
-
-A data de nascimento deve ser obrigatória, inclusive para Pessoa Jurídica, para permitir a aplicação das regras de idade definidas pelo sistema.
+A data de nascimento deve ser obrigatória, para permitir a aplicação das regras de idade definidas pelo sistema.
 
 ### RF05 — Armazenamento do currículo
 
@@ -232,13 +227,13 @@ Exemplos:
 * "Este e-mail já está cadastrado."
 * "Preencha todos os campos obrigatórios."
 * "As senhas não coincidem."
-* "CPF/CNPJ inválido."
+* "CPF inválido."
 * "Selecione um arquivo PDF válido."
 * "Você já possui uma candidatura para esta vaga."
 * "Você não possui permissão para acessar esta funcionalidade."
 * "Não foi possível realizar a operação. Tente novamente."
 
-As mensagens não devem expor informações técnicas do banco de dados, como SQL, nomes de tabelas, nomes de colunas ou stack traces.
+As mensagens não devem expor informações técnicas do banco de dados, como SQL, nomes de tabelas ou nomes de colunas.
 
 ---
 
