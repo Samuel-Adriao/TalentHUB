@@ -70,15 +70,15 @@ Funcionalidades:
 
 As candidaturas serão armazenadas na tabela candidatura, que relaciona o candidato à vaga correspondente.
 
-| STATUS | PREVISTO |
-| -----------------------------| -----------------------------|
-| PENDENTE | candidatura aguardando análise |
-| APROVADA | candidatura aprovada pelo recrutador|
-| REJEITADA | candidatura recusada pelo recrutador |
-
 ## 5. Aprovação e Recusa de Candidaturas
 
 Após analisar uma candidatura, o recrutador poderá aprová-la ou recusá-la.
+
+| STATUS | PREVISTO |
+| -----------------------------| -----------------------------|
+| PENDENTE | candidatura aguardando análise |
+| APROVADA | candidatura aprovada pelo recrutador |
+| REJEITADA | candidatura recusada pelo recrutador |
 
 Aprovar candidatura:
 
@@ -94,36 +94,38 @@ Registrar o identificador do recrutador responsável.
 
 Essas operações serão realizadas na tabela candidatura, utilizando os campos status, data_ultima_acao e id_rh_responsavel.
 
-6. Agendamento de Entrevistas
+## 6. Agendamento de Entrevistas
 
 O recrutador poderá agendar entrevistas para candidaturas em processo seletivo.
 
 Funcionalidades:
 
-Selecionar a candidatura relacionada.
-Definir a data da entrevista.
-Definir o horário da entrevista.
-Registrar o agendamento no banco de dados.
-Consultar as entrevistas cadastradas.
+- Selecionar a candidatura relacionada.
+- Definir a data da entrevista.
+- Definir o horário da entrevista.
+- Consultar as entrevistas cadastradas.
 
 Os registros serão armazenados na tabela entrevista, relacionados à candidatura correspondente por meio do campo id_candidatura.
 
 Cada entrevista possuirá um status:
 
-AGENDADA — entrevista programada.
-REALIZADA — entrevista concluída.
-CANCELADA — entrevista cancelada.
-7. Gerenciamento de Entrevistas
+| STATUS | PREVISTO |
+| -----------------------------| -----------------------------|
+| AGENDADA | entrevista programada |
+| REALIZADA | entrevista concluída |
+| CANCELADA | entrevista cancelada |
+
+## 7. Gerenciamento de Entrevistas
 
 O recrutador poderá acompanhar os agendamentos existentes.
 
 Funcionalidades:
 
-Visualizar a lista de entrevistas.
-Consultar o candidato e a vaga relacionados.
-Consultar a data e o horário agendados.
-Verificar o status da entrevista.
-Cancelar entrevistas previamente agendadas.
+- Visualizar a lista de entrevistas.
+- Consultar o candidato e a vaga relacionados.
+- Consultar a data e o horário agendados.
+- Verificar o status da entrevista.
+- Cancelar entrevistas previamente agendadas.
 
 Ao cancelar uma entrevista, seu status será atualizado para CANCELADA, preservando o registro para consulta posterior.
 
@@ -131,62 +133,96 @@ Organização das Telas
 
 A interface gráfica do módulo será desenvolvida com JavaFX e poderá ser organizada da seguinte maneira:
 
-Módulo Recrutador (RH)
-│
-├── Dashboard RH
-│   ├── Total de candidatos
-│   ├── Total de vagas
-│   ├── Total de candidaturas
-│   └── Total de entrevistas
-│
-├── Vagas
-│   ├── Listar vagas
-│   ├── Cadastrar vaga
-│   └── Excluir vaga
-│
-├── Candidaturas
-│   ├── Listar candidaturas
-│   ├── Visualizar detalhes
-│   ├── Aprovar candidatura
-│   └── Recusar candidatura
-│
-└── Entrevistas
-    ├── Listar entrevistas
-    ├── Visualizar detalhes
-    └── Cancelar entrevista
-Tecnologias Utilizadas
-Tecnologia	Aplicação no módulo
-Java	Implementação da lógica de negócio.
-JavaFX	Desenvolvimento das telas e componentes gráficos.
-FXML	Organização declarativa das interfaces gráficas, caso adotado no projeto.
-MySQL	Armazenamento das vagas, candidaturas e entrevistas.
-MySQL Connector/J	Comunicação entre a aplicação Java e o banco de dados.
-JDBC	Execução das consultas e operações SQL.
-Maven	Gerenciamento das dependências do projeto.
-Git e GitHub	Versionamento e colaboração no desenvolvimento.
-Tabelas do Banco de Dados Utilizadas
+# Módulo Recrutador (RH)
 
-O módulo Recrutador utilizará as seguintes tabelas do banco de dados talenthub:
+Diagrama das funcionalidades disponíveis para o recrutador no sistema.
 
-Tabela	Utilização
-usuario	Identificação dos usuários, consulta de e-mails e identificação do perfil de acesso.
-perfil	Consulta dos dados pessoais, formação, experiência e currículo dos candidatos.
-vaga	Cadastro, consulta e gerenciamento das vagas.
-candidatura	Consulta das candidaturas, atualização de status e registro do responsável pela decisão.
-entrevista	Cadastro, consulta e cancelamento de entrevistas.
+```mermaid
+flowchart TD
+    A["👤 Módulo Recrutador (RH)"]
 
-Não é necessário criar uma tabela exclusiva para o recrutador, pois seu perfil será identificado pelo campo tipo_usuario da tabela usuario, cujo valor correspondente é RH.
+    A --> B["📊 Dashboard RH"]
+    A --> C["📋 Vagas"]
+    A --> D["📝 Candidaturas"]
+    A --> E["📅 Entrevistas"]
 
-Regras de Acesso e Funcionamento
-Somente usuários autenticados com perfil RH poderão executar as operações exclusivas do recrutador.
-As permissões serão verificadas pela lógica da aplicação, e não apenas pela interface gráfica.
-As decisões sobre candidaturas deverão registrar a data e hora da última ação e o recrutador responsável.
-As entrevistas deverão estar vinculadas a candidaturas existentes.
-O cancelamento de uma entrevista deverá atualizar seu status, preservando o registro.
-A exclusão de vagas deverá considerar os relacionamentos existentes com candidaturas e entrevistas.
-Os dados apresentados no dashboard deverão ser consultados no banco de dados para refletir as informações disponíveis no sistema.
-Objetivo do Módulo
+    B --> B1["Total de candidatos"]
+    B --> B2["Total de vagas"]
+    B --> B3["Total de candidaturas"]
+    B --> B4["Total de entrevistas"]
 
-O módulo Recrutador tem como objetivo centralizar as atividades de RH no TalentHUB, permitindo administrar oportunidades de emprego, analisar candidaturas, tomar decisões sobre candidatos e organizar entrevistas em uma única interface.
+    C --> C1["Listar vagas"]
+    C --> C2["Cadastrar vaga"]
+    C --> C3["Excluir vaga"]
 
-Dessa forma, o módulo contribui para tornar o processo de recrutamento e seleção mais organizado, rastreável e eficiente.
+    D --> D1["Listar candidaturas"]
+    D --> D2["Visualizar detalhes"]
+    D --> D3["Aprovar candidatura"]
+    D --> D4["Recusar candidatura"]
+
+    E --> E1["Listar entrevistas"]
+    E --> E2["Visualizar detalhes"]
+    E --> E3["Cancelar entrevista"]
+
+    classDef principal fill:#1D4ED8,color:#FFFFFF,stroke:#1E3A8A,stroke-width:2px
+    classDef modulo fill:#DBEAFE,color:#1E3A8A,stroke:#60A5FA,stroke-width:1px
+    classDef funcionalidade fill:#F8FAFC,color:#334155,stroke:#CBD5E1,stroke-width:1px
+
+    class A principal
+    class B,C,D,E modulo
+    class B1,B2,B3,B4,C1,C2,C3,D1,D2,D3,D4,E1,E2,E3 funcionalidade
+```
+
+## Funcionalidades do módulo
+
+* **Dashboard RH:** acompanhamento dos indicadores gerais.
+* **Vagas:** gerenciamento das vagas disponíveis.
+* **Candidaturas:** análise, aprovação e recusa de candidatos.
+* **Entrevistas:** consulta aos agendamentos e cancelamento de entrevistas.
+
+    
+# Tecnologias Utilizadas
+
+| Tecnologia/Ferramenta             | O que é                                                                   |
+| --------------------------------- | ------------------------------------------------------------------------- |
+| **Java**                          | Linguagem de programação principal do sistema.                            |
+| **JDK**                           | Kit necessário para desenvolver e executar aplicações Java.               |
+| **JavaFX**                        | Framework utilizado para desenvolver a interface gráfica.                 |
+| **MySQL Community Server**        | Sistema de gerenciamento do banco de dados.                               |
+| **MySQL Connector/J**             | Driver JDBC utilizado para a comunicação entre Java e MySQL.              |
+| **Maven**                         | Ferramenta para gerenciamento do projeto e suas dependências.             |
+| **Git**                           | Sistema de controle de versões.                                           |
+| **GitHub**                        | Plataforma utilizada para hospedagem e colaboração do projeto.            |
+| **Visual Studio Code**            | Editor utilizado para desenvolvimento do sistema.                         |
+| **SQLTools**                      | Extensão utilizada para acessar e gerenciar bancos de dados pelo VS Code. |
+| **SQLTools MySQL/MariaDB Driver** | Driver utilizado pelo SQLTools para conexão com o MySQL.                  |
+| **GitLens**                       | Extensão que adiciona recursos ao gerenciamento de versões com Git.       |
+
+# 8 - Utilização do módulo em SQL:
+
+O módulo Recrutador do TalentHub utiliza cinco tabelas principais para gerenciar usuários, perfis de candidatos, vagas, candidaturas e entrevistas.
+
+```mermaid
+flowchart TD
+    U["👤 Usuário"]
+    P["📄 perfil"]
+    V["💼 vaga"]
+    C["📝 candidatura"]
+    E["📅 entrevista"]
+
+    U -->|"Identifica o recrutador"| V
+    U -->|"Identifica o recrutador responsável"| C
+    U -->|"Relaciona-se ao perfil do candidato"| P
+
+    P -->|"Realiza"| C
+    V -->|"Recebe"| C
+    C -->|"Pode gerar"| E
+
+    classDef usuario fill:#DBEAFE,color:#1E3A8A,stroke:#2563EB,stroke-width:2px
+    classDef entidade fill:#F8FAFC,color:#334155,stroke:#94A3B8,stroke-width:1px
+    classDef processo fill:#DCFCE7,color:#166534,stroke:#22C55E,stroke-width:1px
+
+    class U usuario
+    class P,V entidade
+    class C,E processo
+```
