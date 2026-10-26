@@ -1,0 +1,15 @@
+# Pastas de compilação do Maven e Java
+target/
+*.class
+
+# Configurações do VS Code e IDEs
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# Arquivos de sistema e temporários
+.DS_Store
+Thumbs.db
