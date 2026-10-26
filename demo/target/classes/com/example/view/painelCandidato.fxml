@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+  <tabs>
+    <Tab text="Vagas em Aberto">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView layoutX="67.0" layoutY="52.0" prefHeight="200.0" prefWidth="466.0">
+                    <columns>
+                      <TableColumn fx:id="colunaVagas" prefWidth="117.60003662109375" text="Vaga" />
+                      <TableColumn fx:id="colunaRequisitos" prefWidth="245.5999755859375" text="Requisitos" />
+                        <TableColumn fx:id="colunaEmpresa" minWidth="0.0" prefWidth="103.20001220703125" text="Empresa" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="botaoCandidatar" layoutX="187.0" layoutY="266.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="CANDIDATAR-SE" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Perfil">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="txtNome" layoutX="44.0" layoutY="55.0" promptText="Nome:" />
+                  <TextField fx:id="txtEmail" layoutX="44.0" layoutY="95.0" promptText="Email: ex@gmail.com" />
+                  <TextField fx:id="txtTelefone" layoutX="44.0" layoutY="134.0" promptText="Telefone:" />
+                  <TextField fx:id="txtCpf" layoutX="44.0" layoutY="173.0" promptText="CPF:" />
+                  <TextField fx:id="txtDataNascimento" layoutX="44.0" layoutY="212.0" promptText="Data Nascimento:" />
+                  <TextField fx:id="txtCidade" layoutX="310.0" layoutY="186.0" promptText="Cidade" />
+                  <TextField fx:id="txtExperiencia" layoutX="44.0" layoutY="299.0" promptText="Experiência" />
+                  <TextField fx:id="txtBairro" layoutX="310.0" layoutY="68.0" promptText="Bairro" />
+                  <TextField fx:id="txtEstado" layoutX="310.0" layoutY="108.0" promptText="Estado" />
+                  <TextField fx:id="txtCep" layoutX="310.0" layoutY="147.0" promptText="CEP" />
+                  <TextField fx:id="txtFormacao" layoutX="44.0" layoutY="256.0" promptText="Formação" />
+                  <Label layoutX="33.0" layoutY="20.0" text="Informações Pessoais" />
+                  <Label layoutX="300.0" layoutY="20.0" text="Informações de Cobrança" />
+                  <Button fx:id="botaoSalvarAlteracoes" layoutX="313.0" layoutY="255.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="144.0" text="Salvar Alterações" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Minhas Candidaturas">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TableView layoutX="15.0" layoutY="54.0" prefHeight="200.0" prefWidth="570.0">
+                    <columns>
+                      <TableColumn fx:id="colunaIdCandidatura" prefWidth="92.800048828125" text="ID da inscrição" />
+                      <TableColumn fx:id="colunaIdVaga" minWidth="0.0" prefWidth="111.99993896484375" text="Id da Vaga" />
+                        <TableColumn fx:id="colunaIdCandidato" prefWidth="164.00006103515625" text="Id do Candidato" />
+                        <TableColumn fx:id="colunaDataCandidatura" prefWidth="200.00006103515625" text="Data da Candidatura" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="botaoCancelar_candidatura" layoutX="200.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="CANCELAR INSCRIÇÃO" />
+               </children></AnchorPane>
+        </content>
+      </Tab>
+  </tabs>
+</TabPane>
