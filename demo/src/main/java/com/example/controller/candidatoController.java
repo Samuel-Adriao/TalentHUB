@@ -3,9 +3,19 @@ package com.example.controller;
 import com.example.config.SessaoLogada;
 import com.example.dao.candidatoDAO;
 import com.example.model.Candidato;
+import com.example.model.Candidatura;
+import com.example.dao.CandidaturaDAO;
+import com.example.dao.VagaDAO;
+import com.example.model.Vaga;
 
+import java.util.List;
+
+import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
+import javafx.scene.control.Alert;
 
 public class candidatoController {
 
@@ -22,25 +32,23 @@ public class candidatoController {
     @FXML private TextField txtExperiencia;
     private int idLogado;
 
+    @FXML private TableView<Vaga> tabelaVagas;
+    @FXML private TableView<Candidatura> tabelaCandidatura;
+
     private candidatoDAO candidatoDAO = new candidatoDAO();
 
     @FXML
     public void initialize() {
+
         idLogado = SessaoLogada.getIdLogado();
 
-        Candidato candidatoLogado = candidatoDAO.consultarCandidato(idLogado);
-        txtNome.setText(candidatoLogado.getNome());
-        txtEmail.setText(candidatoLogado.getEmail());
-        txtTelefone.setText(candidatoLogado.getTelefone());
-        txtCpf.setText(candidatoLogado.getCpf());
-        txtDataNascimento.setText(candidatoLogado.getDataNascimento());
-        txtCidade.setText(candidatoLogado.getCidade());
-        txtBairro.setText(candidatoLogado.getBairro());
-        txtEstado.setText(candidatoLogado.getEstado());
-        txtCep.setText(candidatoLogado.getCep());
-        txtFormacao.setText(candidatoLogado.getFormacao());
-        txtExperiencia.setText(candidatoLogado.getExperiencia());
+        if (idLogado > 0) {
 
+            carregarDadosPerfil();
+            carregarDadosCandidatura();
+            carregarDadosVagas();
+
+        }
     }
 
     @FXML 
@@ -71,7 +79,53 @@ public class candidatoController {
         candidato.setFormacao(formacao);
         candidato.setExperiencia(experiencia);
 
-        candidatoDAO.atualizarCandidato(candidato);
-    
+        if (txtNome.getText().isEmpty() || txtCpf.getText().isEmpty() || txtEmail.getText().isEmpty() || txtTelefone.getText().isEmpty() || txtDataNascimento.getText().isEmpty()) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Atenção...");
+            alerta.setContentText("Por Favor, preencha os campos obrigatórios!");
+            alerta.showAndWait();
+
+        } else {
+
+            candidatoDAO.atualizarCandidato(candidato);
+            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+            alerta.setTitle("Confirmando Dados...");
+            alerta.setContentText("Dados atualizados com sucesso!");
+            alerta.showAndWait();
+        }
     } 
+
+    public void carregarDadosPerfil() {
+
+        Candidato candidatoLogado = candidatoDAO.consultarCandidato(idLogado);
+        txtNome.setText(candidatoLogado.getNome());                           
+        txtEmail.setText(candidatoLogado.getEmail());                         
+        txtTelefone.setText(candidatoLogado.getTelefone());                   
+        txtCpf.setText(candidatoLogado.getCpf());                             
+        txtDataNascimento.setText(candidatoLogado.getDataNascimento()); 
+        txtCidade.setText(candidatoLogado.getCidade());                
+        txtBairro.setText(candidatoLogado.getBairro());          
+        txtEstado.setText(candidatoLogado.getEstado());          
+        txtCep.setText(candidatoLogado.getCep());                
+        txtFormacao.setText(candidatoLogado.getFormacao());      
+        txtExperiencia.setText(candidatoLogado.getExperiencia());
+    }
+
+    public void carregarDadosCandidatura() {
+
+        CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
+        List<Candidatura> listaDeCandidaturas = candidaturaDAO.acompanharCandidatura(idLogado);
+
+        ObservableList<Candidatura> dadosTabelaCandidatura = FXCollections.observableArrayList(listaDeCandidaturas);
+        tabelaCandidatura.setItems(dadosTabelaCandidatura);
+    }
+
+    public void carregarDadosVagas() {
+
+        VagaDAO vagaDAO = new VagaDAO();
+        List<Vaga> listaDeVagas = vagaDAO.consultarTodasVagas();
+
+        ObservableList<Vaga> dadosTabelaVaga = FXCollections.observableArrayList(listaDeVagas);
+        tabelaVagas.setItems(dadosTabelaVaga);
+    }
 }
