@@ -58,4 +58,26 @@ public class CandidaturaDAO {
         }
         return listaCandidaturas;
     }
+
+    public void deletarCandidatura(int id_candidato, int idvaga) {
+        String sql = "DELETE FROM candidatura WHERE id_candidato = ? AND id_vaga = ?";
+
+        try (Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setInt(1, id_candidato);
+                stmt.setInt(2, idvaga);
+
+                int linhasAfetadas = stmt.executeUpdate();
+                if (linhasAfetadas > 0) {
+                    System.out.println("Informações deletadas com sucesso!");
+                } else {
+                    System.out.println("Erro ao apagar informações!");
+                }
+            
+        } catch (SQLException erro) {
+            System.out.println("Erro ao realizar exclusão de dados!" + erro.getMessage());
+        }
+
+    }
 }

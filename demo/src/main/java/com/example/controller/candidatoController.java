@@ -16,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class candidatoController {
 
@@ -35,7 +37,12 @@ public class candidatoController {
     @FXML private TableView<Vaga> tabelaVagas;
     @FXML private TableView<Candidatura> tabelaCandidatura;
 
+    @FXML private TableColumn<Vaga, String> colunaVagas;
+    @FXML private TableColumn<Vaga, String> colunaRequisitos;
+    @FXML private TableColumn<Vaga, String> colunaEmpresa;
+
     private candidatoDAO candidatoDAO = new candidatoDAO();
+    private CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
 
     @FXML
     public void initialize() {
@@ -44,10 +51,13 @@ public class candidatoController {
 
         if (idLogado > 0) {
 
+            colunaVagas.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+            colunaRequisitos.setCellValueFactory(new PropertyValueFactory<>("requisitos"));
+            colunaEmpresa.setCellValueFactory(new PropertyValueFactory<>("empresa"));
+
             carregarDadosPerfil();
             carregarDadosCandidatura();
             carregarDadosVagas();
-
         }
     }
 
@@ -86,7 +96,6 @@ public class candidatoController {
             alerta.showAndWait();
 
         } else {
-
             candidatoDAO.atualizarCandidato(candidato);
             Alert alerta = new Alert(Alert.AlertType.INFORMATION);
             alerta.setTitle("Confirmando Dados...");
@@ -94,6 +103,45 @@ public class candidatoController {
             alerta.showAndWait();
         }
     } 
+
+    @FXML 
+    private void handleCandidatar() {
+
+        Vaga vagaSelecionada = tabelaVagas.getSelectionModel().getSelectedItem();
+        if (vagaSelecionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Seleção Vazia");
+            alerta.setContentText("Por Favor, escolha uma vaga na tabela para se candidatar!");
+            alerta.showAndWait();
+            return;
+        }
+
+        candidaturaDAO.inscreverCandidatura(idLogado, vagaSelecionada.getIdVaga());
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Completando inscrição...");
+        alerta.setContentText("Inscrição confirmada! Parabéns.");
+        alerta.showAndWait();
+    }
+
+    @FXML 
+    private void handleCancelarCandidatura() {
+        Candidatura candidaturaSelecionada = tabelaCandidatura.getSelectionModel().getSelectedItem();
+        if (candidaturaSelecionada == null) {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Seleção Vazia");
+            alerta.setContentText("Por Favor, escolha uma candidatura válida!");
+            alerta.showAndWait();
+            return;
+        }
+
+        candidaturaDAO.deletarCandidatura(idLogado, candidaturaSelecionada.getIdVaga());
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Confirmando Exclusão...");
+        alerta.setContentText("Exclusão confirmada e candidatura retirada.");
+        alerta.showAndWait();
+
+        carregarDadosCandidatura();
+    }
 
     public void carregarDadosPerfil() {
 

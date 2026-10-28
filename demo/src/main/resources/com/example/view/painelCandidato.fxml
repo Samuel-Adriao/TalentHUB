@@ -15,14 +15,14 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView layoutX="67.0" layoutY="52.0" prefHeight="200.0" prefWidth="466.0">
+                  <TableView fx:id="tabelaVagas" layoutX="67.0" layoutY="52.0" prefHeight="200.0" prefWidth="466.0">
                     <columns>
                       <TableColumn fx:id="colunaVagas" prefWidth="117.60003662109375" text="Vaga" />
                       <TableColumn fx:id="colunaRequisitos" prefWidth="245.5999755859375" text="Requisitos" />
                         <TableColumn fx:id="colunaEmpresa" minWidth="0.0" prefWidth="103.20001220703125" text="Empresa" />
                     </columns>
                   </TableView>
-                  <Button fx:id="botaoCandidatar" layoutX="187.0" layoutY="266.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="CANDIDATAR-SE" />
+                  <Button fx:id="botaoCandidatar" layoutX="187.0" layoutY="266.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="225.0" text="CANDIDATAR-SE" onAction="#handleCandidatar" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -51,7 +51,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView layoutX="15.0" layoutY="54.0" prefHeight="200.0" prefWidth="570.0">
+                  <TableView fx:id="tabelaCandidatura" layoutX="15.0" layoutY="54.0" prefHeight="200.0" prefWidth="570.0">
                     <columns>
                       <TableColumn fx:id="colunaIdCandidatura" prefWidth="92.800048828125" text="ID da inscrição" />
                       <TableColumn fx:id="colunaIdVaga" minWidth="0.0" prefWidth="111.99993896484375" text="Id da Vaga" />
@@ -59,7 +59,7 @@
                         <TableColumn fx:id="colunaDataCandidatura" prefWidth="200.00006103515625" text="Data da Candidatura" />
                     </columns>
                   </TableView>
-                  <Button fx:id="botaoCancelar_candidatura" layoutX="200.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="CANCELAR INSCRIÇÃO" />
+                  <Button fx:id="botaoCancelar_candidatura" layoutX="200.0" layoutY="269.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="179.0" text="CANCELAR INSCRIÇÃO" onAction="#handleCancelarCandidatura"/>
                </children></AnchorPane>
         </content>
       </Tab>

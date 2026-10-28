@@ -85,7 +85,6 @@ public class candidatoDAO {
                     System.out.println("Erro ao deletar informações!");
                 }
 
-
         } catch (SQLException erro) {
                 System.out.println("Erro ao acessar o banco de dados!" + erro.getMessage());
         }
