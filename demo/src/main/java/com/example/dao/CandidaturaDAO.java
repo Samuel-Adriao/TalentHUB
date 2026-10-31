@@ -11,6 +11,8 @@ import com.example.model.Candidatura;
 
 
 public class CandidaturaDAO {
+
+    // Essa função serve para o candidato se inscrever em alguma candidatura disponível no sistema, por meio do id candidato e id vaga
     public void inscreverCandidatura(int id_candidato, int idVaga) {
         String sql = "INSERT INTO candidaturas (id_candidato, id_vaga) VALUES (?, ?)";
 
@@ -32,6 +34,7 @@ public class CandidaturaDAO {
         }
     }
     
+    // Essa função é uma lista, que busca todas as candidaturas que o candidato realizou alguma inscrição, retornando no final a lista completa, ela funciona através do id do candidato
     public List<Candidatura> acompanharCandidatura(int id_candidato) {
         String sql = "SELECT * FROM candidatura WHERE id_candidato = ?";
         List<Candidatura> listaCandidaturas = new ArrayList<>();
@@ -59,6 +62,7 @@ public class CandidaturaDAO {
         return listaCandidaturas;
     }
 
+    // Essa função é responsável por deletar a candidatura escolhida pelo candidato, por meio do id do candidato e id vaga
     public void deletarCandidatura(int id_candidato, int idvaga) {
         String sql = "DELETE FROM candidatura WHERE id_candidato = ? AND id_vaga = ?";
 

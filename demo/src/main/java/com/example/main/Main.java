@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    // Basicamente esse main ele vai carregar a primeira tela do sistema, e montar automaticamente o que vier a seguir
     @Override 
     public void start(Stage primaryStage) {
         try {

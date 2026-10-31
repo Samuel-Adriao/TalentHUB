@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import com.example.model.Vaga;
 
 public class VagaDAO {
+
+    // A função desse consultar vagas é retornar uma vaga específica pelo id vaga, no final vai retornar a vaga correspondente
     public Vaga consultarVagas(int idVaga) {
         String sql = "SELECT * FROM vagas WHERE id_vaga = ?";
         Vaga vaga = null;
@@ -38,6 +40,7 @@ public class VagaDAO {
         return vaga;
     }
 
+    // A função desse consultar vagas é funcionar como uma lista, vai retornar todas as vagas disponíveis no sistema, retorna no final a lista de vagas
     public List<Vaga> consultarTodasVagas() {
         String sql = "SELECT * FROM vagas";
         List<Vaga> listaVagas = new ArrayList<>();

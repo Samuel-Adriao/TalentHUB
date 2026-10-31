@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import com.example.model.Candidato;
  
 public class candidatoDAO {
+
+    // Cadastra o candidato e as informções passadas para dentro do banco de dados
     public void cadastrarCandidato(String nome, String email, String telefone, String cpf, String data_nascimento, String cidade, String bairro, String estado, String cep, String formacao, String experiencia) {
         String sql = "INSERT INTO candidatos (nome, email, telefone, cpf, data_nascimento, cidade, bairro, estado, cep, formacao, experiencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -39,6 +41,7 @@ public class candidatoDAO {
         }
     }
 
+    // A função desse atualizar é editar as informações do perfil do candidato depois de o login já ter sido realizado
     public void atualizarCandidato(Candidato candidato) {
         String sql = "UPDATE candidatos SET nome = ?, email = ?, telefone = ?, cpf = ?, data_nascimento = ?, cidade = ?, bairro = ?, estado = ?, cep = ?, formacao = ?, experiencia = ? WHERE id_candidato = ?";
 
@@ -70,13 +73,14 @@ public class candidatoDAO {
         }
     }
 
-    public void deletarCandidato(Candidato candidato) {
+    // O deletar serve pra apagar permanentemente o perfil do candidato do banco de dados
+    public void deletarCandidato(int id_candidato) {
         String sql = "DELETE FROM candidatos WHERE id_candidato = ?";
 
         try (Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                stmt.setInt(1, candidato.getId());
+                stmt.setInt(1, id_candidato);
 
                 int linhasAfetadas = stmt.executeUpdate();
                 if (linhasAfetadas > 0) {
@@ -90,6 +94,7 @@ public class candidatoDAO {
         }
     }
 
+    // Essa função serve pra consultar o candidato por meio do id do candidato, e buscando sempre as informações mais importantes, e irá retornar o candidato no final
     public Candidato consultarCandidato(int id) {
         String sql = "SELECT * FROM candidatos WHERE id_candidato = ?";
         Candidato candidato = null;
@@ -106,6 +111,8 @@ public class candidatoDAO {
                     candidato.setNome(rs.getString("nome"));
                     candidato.setEmail(rs.getString("email"));
                     candidato.setTelefone(rs.getString("telefone"));
+                    candidato.setCpf(rs.getString("cpf"));
+                    candidato.setDataNascimento(rs.getString("data_nascimento"));
                 }                
             }     
                 

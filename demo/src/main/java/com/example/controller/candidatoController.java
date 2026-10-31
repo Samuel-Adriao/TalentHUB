@@ -143,6 +143,24 @@ public class candidatoController {
         carregarDadosCandidatura();
     }
 
+    @FXML
+    private void handleExcluirPerfil() {
+        Alert alertaConfirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        alertaConfirmacao.setTitle("Excluir Conta");
+        alertaConfirmacao.setHeaderText("Certeza que deseja excluir a conta?");
+        alertaConfirmacao.setContentText("Esta ação não poderá ser desfeita.");
+
+        if (alertaConfirmacao.showAndWait().get() == javafx.scene.control.ButtonType.OK) {
+            candidatoDAO.deletarCandidato(idLogado);
+
+            Alert alertaSucesso = new Alert(Alert.AlertType.INFORMATION);
+            alertaSucesso.setTitle("Conta Excluída");
+            alertaSucesso.setContentText("Sua conta foi excluída com sucesso!");
+            alertaSucesso.showAndWait();
+
+        }
+    }
+
     public void carregarDadosPerfil() {
 
         Candidato candidatoLogado = candidatoDAO.consultarCandidato(idLogado);

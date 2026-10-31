@@ -1,5 +1,6 @@
 package com.example.config;
 
+// Classe pra buscar o id do candidato logado
 public class SessaoLogada {
 
     private static int idCandidatoLogado;

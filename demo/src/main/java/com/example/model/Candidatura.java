@@ -1,5 +1,6 @@
 package com.example.model;
 
+// Define os atributos existentes da classe candidatura
 public class Candidatura {
 
     private int idCandidatura;
