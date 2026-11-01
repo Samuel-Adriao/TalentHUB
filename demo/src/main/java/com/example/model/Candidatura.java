@@ -8,6 +8,8 @@ public class Candidatura {
     private int idVaga;
     private String dataCandidatura;
 
+    private Vaga vaga;
+
     public Candidatura(){
     }
 
@@ -30,6 +32,9 @@ public class Candidatura {
     public String getDataCandidatura() {
         return dataCandidatura;
     }
+    public Vaga getVaga() {
+        return vaga;
+    }
     public void setIdCandidatura(int idCandidatura) {
         this.idCandidatura = idCandidatura;
     }
@@ -41,5 +46,8 @@ public class Candidatura {
     }
     public void setDataCandidatura(String dataCandidatura) {
         this.dataCandidatura = dataCandidatura;
+    }
+    public void setVaga(Vaga vaga) {
+        this.vaga = vaga;
     }
 }

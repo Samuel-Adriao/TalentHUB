@@ -11,6 +11,8 @@ import com.example.model.Vaga;
 import java.util.List;
 
 import javafx.collections.ObservableList;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -40,6 +42,15 @@ public class candidatoController {
     @FXML private TableColumn<Vaga, String> colunaVagas;
     @FXML private TableColumn<Vaga, String> colunaRequisitos;
     @FXML private TableColumn<Vaga, String> colunaEmpresa;
+    @FXML private TableColumn<Vaga, String> colunaDescricao;
+    @FXML private TableColumn<Vaga, String> colunaDataPublicacao;
+    @FXML private TableColumn<Vaga, Double> colunaSalario;
+    
+    @FXML private TableColumn<Candidatura, String> colunaTituloVaga;
+    @FXML private TableColumn<Candidatura, String> colunaEmpresaCandidatura;
+    @FXML private TableColumn<Candidatura, Double> colunaSalarioCandidatura;
+    @FXML private TableColumn<Candidatura, String> colunaDataCandidatura;
+
 
     private candidatoDAO candidatoDAO = new candidatoDAO();
     private CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
@@ -47,17 +58,27 @@ public class candidatoController {
     @FXML
     public void initialize() {
 
+        SessaoLogada.setIdLogado(1);
         idLogado = SessaoLogada.getIdLogado();
 
         if (idLogado > 0) {
 
-            colunaVagas.setCellValueFactory(new PropertyValueFactory<>("titulo"));
-            colunaRequisitos.setCellValueFactory(new PropertyValueFactory<>("requisitos"));
-            colunaEmpresa.setCellValueFactory(new PropertyValueFactory<>("empresa"));
+            colunaVagas.setCellValueFactory(new PropertyValueFactory<>("Titulo"));
+            colunaRequisitos.setCellValueFactory(new PropertyValueFactory<>("Requisitos"));
+            colunaEmpresa.setCellValueFactory(new PropertyValueFactory<>("Empresa"));
+            colunaDescricao.setCellValueFactory(new PropertyValueFactory<>("Descricao"));
+            colunaDataPublicacao.setCellValueFactory(new PropertyValueFactory<>("DataPublicacao"));
+            colunaSalario.setCellValueFactory(new PropertyValueFactory<>("Salario"));
+
+            colunaTituloVaga.setCellValueFactory(celula -> new ReadOnlyStringWrapper(celula.getValue().getVaga().getTitulo()));
+            colunaEmpresaCandidatura.setCellValueFactory(celula -> new ReadOnlyStringWrapper(celula.getValue().getVaga().getEmpresa()));
+            colunaSalarioCandidatura.setCellValueFactory(celula -> new ReadOnlyObjectWrapper<>(celula.getValue().getVaga().getSalario()));
+            colunaDataCandidatura.setCellValueFactory(new PropertyValueFactory<>("DataCandidatura"));
+
 
             carregarDadosPerfil();
-            carregarDadosCandidatura();
             carregarDadosVagas();
+            carregarDadosCandidatura();
         }
     }
 
@@ -121,6 +142,7 @@ public class candidatoController {
         alerta.setTitle("Completando inscrição...");
         alerta.setContentText("Inscrição confirmada! Parabéns.");
         alerta.showAndWait();
+        carregarDadosCandidatura();
     }
 
     @FXML 
@@ -177,21 +199,19 @@ public class candidatoController {
         txtExperiencia.setText(candidatoLogado.getExperiencia());
     }
 
-    public void carregarDadosCandidatura() {
+    public void carregarDadosVagas() {  
 
-        CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
+        VagaDAO vagaDAO = new VagaDAO();                                                       
+        List<Vaga> listaDeVagas = vagaDAO.consultarTodasVagas();    
+
+        ObservableList<Vaga> dadosTabelaVaga = FXCollections.observableArrayList(listaDeVagas);
+        tabelaVagas.setItems(dadosTabelaVaga);                                                 
+    }                                                                                          
+
+    public void carregarDadosCandidatura() {
         List<Candidatura> listaDeCandidaturas = candidaturaDAO.acompanharCandidatura(idLogado);
 
         ObservableList<Candidatura> dadosTabelaCandidatura = FXCollections.observableArrayList(listaDeCandidaturas);
         tabelaCandidatura.setItems(dadosTabelaCandidatura);
-    }
-
-    public void carregarDadosVagas() {
-
-        VagaDAO vagaDAO = new VagaDAO();
-        List<Vaga> listaDeVagas = vagaDAO.consultarTodasVagas();
-
-        ObservableList<Vaga> dadosTabelaVaga = FXCollections.observableArrayList(listaDeVagas);
-        tabelaVagas.setItems(dadosTabelaVaga);
     }
 }

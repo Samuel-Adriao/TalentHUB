@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.example.model.Candidatura;
-
+import com.example.model.Vaga;
 
 public class CandidaturaDAO {
 
     // Essa função serve para o candidato se inscrever em alguma candidatura disponível no sistema, por meio do id candidato e id vaga
     public void inscreverCandidatura(int id_candidato, int idVaga) {
-        String sql = "INSERT INTO candidaturas (id_candidato, id_vaga) VALUES (?, ?)";
+        String sql = "INSERT INTO candidatura (id_candidato, id_vaga) VALUES (?, ?)";
 
         try (Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -36,7 +36,7 @@ public class CandidaturaDAO {
     
     // Essa função é uma lista, que busca todas as candidaturas que o candidato realizou alguma inscrição, retornando no final a lista completa, ela funciona através do id do candidato
     public List<Candidatura> acompanharCandidatura(int id_candidato) {
-        String sql = "SELECT * FROM candidatura WHERE id_candidato = ?";
+        String sql = "SELECT candidatura.id_candidatura, candidatura.id_vaga, vaga.titulo, vaga.empresa, vaga.salario, candidatura.dataCandidatura FROM vaga INNER JOIN candidatura ON vaga.id_vaga = candidatura.id_vaga WHERE id_candidato = ?";
         List<Candidatura> listaCandidaturas = new ArrayList<>();
 
         try (Connection conn = Conexao.conectar();
@@ -47,10 +47,14 @@ public class CandidaturaDAO {
             try (ResultSet rs = stmt.executeQuery()) {
                 while(rs.next()) {
                     Candidatura candidatura = new Candidatura();
+                    Vaga vaga = new Vaga();
                     candidatura.setIdCandidatura(rs.getInt("id_candidatura"));
-                    candidatura.setIdCandidato(rs.getInt("id_candidato"));
                     candidatura.setIdVaga(rs.getInt("id_vaga"));
-                    candidatura.setDataCandidatura(rs.getString("data_candidatura"));
+                    vaga.setTitulo(rs.getString("titulo"));
+                    vaga.setEmpresa(rs.getString("empresa"));
+                    vaga.setSalario(rs.getDouble("salario"));
+                    candidatura.setDataCandidatura(rs.getString("dataCandidatura"));
+                    candidatura.setVaga(vaga);
 
                     listaCandidaturas.add(candidatura);      
                 }
