@@ -9,23 +9,23 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.candidatoController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="455.0" prefWidth="742.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.controller.candidatoController">
   <tabs>
     <Tab text="Vagas em Aberto">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="608.0">
                <children>
-                  <TableView fx:id="tabelaVagas" layoutX="3.0" layoutY="52.0" prefHeight="246.0" prefWidth="592.0">
+                  <TableView fx:id="tabelaVagas" layoutX="3.0" layoutY="52.0" prefHeight="246.0" prefWidth="742.0">
                     <columns>
-                      <TableColumn fx:id="colunaVagas" prefWidth="91.20001220703125" text="Titulo" />
-                      <TableColumn fx:id="colunaRequisitos" prefWidth="128.79998779296875" text="Requisitos" />
-                        <TableColumn fx:id="colunaEmpresa" minWidth="0.0" prefWidth="71.199951171875" text="Empresa" />
-                        <TableColumn fx:id="colunaDescricao" prefWidth="108.00006103515625" text="Descrição" />
-                        <TableColumn fx:id="colunaDataPublicacao" prefWidth="121.60003662109375" text="Data Publicação" />
-                        <TableColumn fx:id="colunaSalario" prefWidth="72.79998779296875" text="Salário" />
+                      <TableColumn fx:id="colunaVagas" prefWidth="100.80001521110535" text="Titulo" />
+                      <TableColumn fx:id="colunaRequisitos" prefWidth="141.5999755859375" text="Requisitos" />
+                        <TableColumn fx:id="colunaEmpresa" minWidth="0.0" prefWidth="109.60005187988281" text="Empresa" />
+                        <TableColumn fx:id="colunaDescricao" prefWidth="152.79998779296875" text="Descrição" />
+                        <TableColumn fx:id="colunaDataPublicacao" prefWidth="132.0" text="Data Publicação" />
+                        <TableColumn fx:id="colunaSalario" prefWidth="115.2000732421875" text="Salário" />
                     </columns>
                   </TableView>
-                  <Button fx:id="botaoCandidatar" layoutX="186.0" layoutY="318.0" mnemonicParsing="false" onAction="#handleCandidatar" prefHeight="26.0" prefWidth="225.0" text="CANDIDATAR-SE" />
+                  <Button fx:id="botaoCandidatar" layoutX="240.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleCandidatar" prefHeight="26.0" prefWidth="225.0" text="CANDIDATAR-SE" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -33,21 +33,21 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextField fx:id="txtNome" layoutX="44.0" layoutY="55.0" promptText="Nome:" />
-                  <TextField fx:id="txtEmail" layoutX="44.0" layoutY="95.0" promptText="Email: ex@gmail.com" />
-                  <TextField fx:id="txtTelefone" layoutX="44.0" layoutY="134.0" promptText="Telefone:" />
-                  <TextField fx:id="txtCpf" layoutX="44.0" layoutY="173.0" promptText="CPF:" />
-                  <TextField fx:id="txtDataNascimento" layoutX="44.0" layoutY="212.0" promptText="Data Nascimento:" />
-                  <TextField fx:id="txtCidade" layoutX="310.0" layoutY="186.0" promptText="Cidade" />
-                  <TextField fx:id="txtExperiencia" layoutX="44.0" layoutY="299.0" promptText="Experiência" />
-                  <TextField fx:id="txtBairro" layoutX="310.0" layoutY="68.0" promptText="Bairro" />
-                  <TextField fx:id="txtEstado" layoutX="310.0" layoutY="108.0" promptText="Estado" />
-                  <TextField fx:id="txtCep" layoutX="310.0" layoutY="147.0" promptText="CEP" />
-                  <TextField fx:id="txtFormacao" layoutX="44.0" layoutY="256.0" promptText="Formação" />
-                  <Label layoutX="33.0" layoutY="20.0" text="Informações Pessoais" />
-                  <Label layoutX="300.0" layoutY="20.0" text="Informações de Cobrança" />
-                  <Button fx:id="botaoSalvarAlteracoes" layoutX="313.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleSalvar" prefHeight="26.0" prefWidth="144.0" text="Salvar Alterações" />
-                  <Button fx:id="botaoExcluirPerfil" layoutX="435.0" layoutY="325.0" mnemonicParsing="false" onAction="#handleExcluirPerfil" prefHeight="26.0" prefWidth="122.0" text="Excluir Perfil" />
+                  <TextField fx:id="txtNome" layoutX="73.0" layoutY="55.0" prefHeight="33.0" prefWidth="158.0" promptText="Nome:" />
+                  <TextField fx:id="txtEmail" layoutX="73.0" layoutY="104.0" prefHeight="33.0" prefWidth="158.0" promptText="Email: ex@gmail.com" />
+                  <TextField fx:id="txtTelefone" layoutX="73.0" layoutY="156.0" prefHeight="33.0" prefWidth="158.0" promptText="Telefone:" />
+                  <TextField fx:id="txtCpf" layoutX="73.0" layoutY="199.0" prefHeight="33.0" prefWidth="158.0" promptText="CPF:" />
+                  <TextField fx:id="txtDataNascimento" layoutX="73.0" layoutY="248.0" prefHeight="33.0" prefWidth="158.0" promptText="Data Nascimento:" />
+                  <TextField fx:id="txtCidade" layoutX="359.0" layoutY="216.0" minHeight="33.0" minWidth="158.0" promptText="Cidade" />
+                  <TextField fx:id="txtExperiencia" layoutX="73.0" layoutY="349.0" prefHeight="33.0" prefWidth="158.0" promptText="Experiência" />
+                  <TextField fx:id="txtBairro" layoutX="360.0" layoutY="63.0" minHeight="33.0" minWidth="158.0" promptText="Bairro" />
+                  <TextField fx:id="txtEstado" layoutX="360.0" layoutY="114.0" minHeight="33.0" minWidth="158.0" promptText="Estado" />
+                  <TextField fx:id="txtCep" layoutX="359.0" layoutY="165.0" minHeight="33.0" minWidth="158.0" promptText="CEP" />
+                  <TextField fx:id="txtFormacao" layoutX="73.0" layoutY="299.0" prefHeight="33.0" prefWidth="158.0" promptText="Formação" />
+                  <Label layoutX="34.0" layoutY="20.0" text="Informações Pessoais (Obrigatórios)" />
+                  <Label layoutX="348.0" layoutY="20.0" text="Informações de Cobrança " />
+                  <Button fx:id="botaoSalvarAlteracoes" layoutX="362.0" layoutY="288.0" mnemonicParsing="false" onAction="#handleSalvar" prefHeight="37.0" prefWidth="153.0" text="Salvar Alterações" />
+                  <Button fx:id="botaoExcluirPerfil" layoutX="575.0" layoutY="366.0" mnemonicParsing="false" onAction="#handleExcluirPerfil" prefHeight="26.0" prefWidth="122.0" text="Excluir Perfil" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -55,15 +55,15 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TableView fx:id="tabelaCandidatura" layoutX="15.0" layoutY="54.0" prefHeight="200.0" prefWidth="570.0">
+                  <TableView fx:id="tabelaCandidatura" layoutX="15.0" layoutY="54.0" prefHeight="200.0" prefWidth="719.0">
                     <columns>
-                      <TableColumn fx:id="colunaTituloVaga" prefWidth="118.4000244140625" text="Título da Vaga" />
-                      <TableColumn fx:id="colunaEmpresaCandidatura" minWidth="0.0" prefWidth="123.20001220703125" text="Empresa" />
-                        <TableColumn fx:id="colunaSalarioCandidatura" prefWidth="144.79998779296875" text="Salário" />
-                        <TableColumn fx:id="colunaDataCandidatura" prefWidth="185.60003662109375" text="Data da Candidatura" />
+                      <TableColumn fx:id="colunaTituloVaga" prefWidth="215.19997882843018" text="Título da Vaga" />
+                      <TableColumn fx:id="colunaEmpresaCandidatura" minWidth="0.0" prefWidth="152.00001525878906" text="Empresa" />
+                        <TableColumn fx:id="colunaSalarioCandidatura" prefWidth="180.79998779296875" text="Salário" />
+                        <TableColumn fx:id="colunaDataCandidatura" prefWidth="172.00006103515625" text="Data da Candidatura" />
                     </columns>
                   </TableView>
-                  <Button fx:id="botaoCancelar_candidatura" layoutX="200.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleCancelarCandidatura" prefHeight="26.0" prefWidth="179.0" text="CANCELAR INSCRIÇÃO" />
+                  <Button fx:id="botaoCancelar_candidatura" layoutX="281.0" layoutY="278.0" mnemonicParsing="false" onAction="#handleCancelarCandidatura" prefHeight="26.0" prefWidth="179.0" text="CANCELAR INSCRIÇÃO" />
                </children></AnchorPane>
         </content>
       </Tab>

@@ -119,11 +119,15 @@ public class candidatoController {
         candidato.setFormacao(formacao);
         candidato.setExperiencia(experiencia);
 
-        if (nome.trim().isEmpty() || cpf.trim().isEmpty() || email.isEmpty()|| !email.contains("@") || !email.contains(".") || telefone.trim().isEmpty() || data_nascimento.trim().isEmpty()) {
+        if (nome.trim().isEmpty() || cpf.trim().isEmpty() || email.isEmpty() || telefone.trim().isEmpty() || data_nascimento.trim().isEmpty() || formacao.trim().isEmpty() || experiencia.trim().isEmpty()) {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Atenção...", "Por favor, preencha os campos obrigatórios de forma correta! (Não deve deixar os campos vazios!)");
+            return;
+        } 
+
+        if (!email.contains("@") || !email.contains(".")) {
             AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Atenção...", "Por favor, preencha os campos obrigatórios de forma correta! (Todo email deve conter '@' e '.')");
             return;
-
-        } else {
+        }
 
             boolean atualizar = candidatoDAO.atualizarCandidato(candidato);
 
@@ -132,7 +136,6 @@ public class candidatoController {
             } else {
                 AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível atualizar os dados do perfil! Tente novamente.");
             }
-        }
     } 
 
     @FXML 
