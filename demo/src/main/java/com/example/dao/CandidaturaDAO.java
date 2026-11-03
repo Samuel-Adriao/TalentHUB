@@ -13,7 +13,7 @@ import com.example.model.Vaga;
 public class CandidaturaDAO {
 
     // Essa função serve para o candidato se inscrever em alguma candidatura disponível no sistema, por meio do id candidato e id vaga
-    public void inscreverCandidatura(int id_candidato, int idVaga) {
+    public boolean inscreverCandidatura(int id_candidato, int idVaga) {
         String sql = "INSERT INTO candidatura (id_candidato, id_vaga) VALUES (?, ?)";
 
         try (Connection conn = Conexao.conectar();
@@ -24,13 +24,16 @@ public class CandidaturaDAO {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
-                System.out.println("Informações gravadas com sucesso!");
+                System.out.println("Informacoes da candidatura gravadas com sucesso!");
+                return true;
             } else {
-                System.out.println("Erro ao gravar informações no banco!");
+                System.out.println("Erro ao gravar informacoes da candidatura no banco!");
+                return false;
             }
 
         } catch (SQLException  erro) {
-            System.out.println("Erro ao acessar o banco de dados!" + erro.getMessage());
+            System.out.println("Erro ao realizar inscrição da candidatura no banco de dados!" + erro.getMessage());
+            return false;
         }
     }
     
@@ -67,25 +70,51 @@ public class CandidaturaDAO {
     }
 
     // Essa função é responsável por deletar a candidatura escolhida pelo candidato, por meio do id do candidato e id vaga
-    public void deletarCandidatura(int id_candidato, int idvaga) {
+    public boolean deletarCandidatura(int id_candidato, int idVaga) {
         String sql = "DELETE FROM candidatura WHERE id_candidato = ? AND id_vaga = ?";
 
         try (Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 stmt.setInt(1, id_candidato);
-                stmt.setInt(2, idvaga);
+                stmt.setInt(2, idVaga);
 
                 int linhasAfetadas = stmt.executeUpdate();
                 if (linhasAfetadas > 0) {
-                    System.out.println("Informações deletadas com sucesso!");
+                    System.out.println("Informacoes deletadas com sucesso!");
+                    return true;
                 } else {
-                    System.out.println("Erro ao apagar informações!");
+                    System.out.println("Erro ao deletar informacoes da candidatura!");
+                    return false;
                 }
             
         } catch (SQLException erro) {
-            System.out.println("Erro ao realizar exclusão de dados!" + erro.getMessage());
+            System.out.println("Erro ao realizar exclusão da candidatura no banco de dados!" + erro.getMessage());
+            return false;
         }
 
+    }
+
+    public boolean verificarCandidaturaExistente(int id_candidato, int idVaga) {
+        String sql = "SELECT COUNT(id_candidatura) AS total FROM candidatura WHERE id_candidato = ? AND id_vaga = ?";
+
+        try (Connection conn = Conexao.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                stmt.setInt(1, id_candidato);
+                stmt.setInt(2, idVaga);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        int total = rs.getInt("total");
+                        return total > 0;
+                    }
+                }
+
+        } catch (SQLException erro) {
+            erro.printStackTrace();
+            return true;
+        }
+        return false;
     }
 }

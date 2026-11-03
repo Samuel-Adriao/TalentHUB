@@ -7,6 +7,7 @@ import com.example.model.Candidatura;
 import com.example.dao.CandidaturaDAO;
 import com.example.dao.VagaDAO;
 import com.example.model.Vaga;
+import com.example.util.AlertaUtil;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class candidatoController {
 
@@ -54,6 +56,7 @@ public class candidatoController {
 
     private candidatoDAO candidatoDAO = new candidatoDAO();
     private CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
+    private VagaDAO vagaDAO = new VagaDAO();
 
     @FXML
     public void initialize() {
@@ -61,7 +64,14 @@ public class candidatoController {
         SessaoLogada.setIdLogado(1);
         idLogado = SessaoLogada.getIdLogado();
 
-        if (idLogado > 0) {
+        if (idLogado <= 0) {
+            return;
+        }
+
+        if (candidatoDAO.consultarCandidato(idLogado) == null) {
+            System.out.println("Usuário não encontrado no sistema");
+            return;
+        }
 
             colunaVagas.setCellValueFactory(new PropertyValueFactory<>("Titulo"));
             colunaRequisitos.setCellValueFactory(new PropertyValueFactory<>("Requisitos"));
@@ -79,13 +89,12 @@ public class candidatoController {
             carregarDadosPerfil();
             carregarDadosVagas();
             carregarDadosCandidatura();
-        }
     }
 
     @FXML 
     private void handleSalvar() {
         String nome = txtNome.getText();
-        String email = txtEmail.getText();
+        String email = txtEmail.getText().trim();
         String telefone = txtTelefone.getText();
         String cpf = txtCpf.getText();
         String data_nascimento = txtDataNascimento.getText();
@@ -110,18 +119,19 @@ public class candidatoController {
         candidato.setFormacao(formacao);
         candidato.setExperiencia(experiencia);
 
-        if (txtNome.getText().isEmpty() || txtCpf.getText().isEmpty() || txtEmail.getText().isEmpty() || txtTelefone.getText().isEmpty() || txtDataNascimento.getText().isEmpty()) {
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Atenção...");
-            alerta.setContentText("Por Favor, preencha os campos obrigatórios!");
-            alerta.showAndWait();
+        if (nome.trim().isEmpty() || cpf.trim().isEmpty() || email.isEmpty()|| !email.contains("@") || !email.contains(".") || telefone.trim().isEmpty() || data_nascimento.trim().isEmpty()) {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Atenção...", "Por favor, preencha os campos obrigatórios de forma correta! (Todo email deve conter '@' e '.')");
+            return;
 
         } else {
-            candidatoDAO.atualizarCandidato(candidato);
-            Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-            alerta.setTitle("Confirmando Dados...");
-            alerta.setContentText("Dados atualizados com sucesso!");
-            alerta.showAndWait();
+
+            boolean atualizar = candidatoDAO.atualizarCandidato(candidato);
+
+            if (atualizar) {
+                AlertaUtil.mostrarAlerta(Alert.AlertType.INFORMATION, "Confirmando dados...", "Dados atualizados com sucesso!");
+            } else {
+                AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível atualizar os dados do perfil! Tente novamente.");
+            }
         }
     } 
 
@@ -130,39 +140,42 @@ public class candidatoController {
 
         Vaga vagaSelecionada = tabelaVagas.getSelectionModel().getSelectedItem();
         if (vagaSelecionada == null) {
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Seleção Vazia");
-            alerta.setContentText("Por Favor, escolha uma vaga na tabela para se candidatar!");
-            alerta.showAndWait();
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Seleção Vazia", "Por favor, escolha uma vaga na tabela para se candidatar!");
             return;
         }
 
-        candidaturaDAO.inscreverCandidatura(idLogado, vagaSelecionada.getIdVaga());
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Completando inscrição...");
-        alerta.setContentText("Inscrição confirmada! Parabéns.");
-        alerta.showAndWait();
-        carregarDadosCandidatura();
+        if (candidaturaDAO.verificarCandidaturaExistente(idLogado, vagaSelecionada.getIdVaga()) == true) {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro ao selecionar vaga!", "Não é possível se inscrever na mesma vaga! Fique atento.");
+            tabelaVagas.getSelectionModel().clearSelection();
+            return;
+        }
+
+        boolean inscrever = candidaturaDAO.inscreverCandidatura(idLogado, vagaSelecionada.getIdVaga());
+        if (inscrever) {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.INFORMATION, "Completando inscrição...", "Inscrição confirmada! Parabéns.");
+            tabelaVagas.getSelectionModel().clearSelection();
+            carregarDadosVagas();
+            carregarDadosCandidatura();
+        } else {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível realizar inscrição na candidatura selecionada! Tente novamente.");
+        }
     }
 
     @FXML 
     private void handleCancelarCandidatura() {
         Candidatura candidaturaSelecionada = tabelaCandidatura.getSelectionModel().getSelectedItem();
         if (candidaturaSelecionada == null) {
-            Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Seleção Vazia");
-            alerta.setContentText("Por Favor, escolha uma candidatura válida!");
-            alerta.showAndWait();
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Seleção Vazia", "Por favor, escolha uma candidatura válida!");
             return;
         }
 
-        candidaturaDAO.deletarCandidatura(idLogado, candidaturaSelecionada.getIdVaga());
-        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
-        alerta.setTitle("Confirmando Exclusão...");
-        alerta.setContentText("Exclusão confirmada e candidatura retirada.");
-        alerta.showAndWait();
-
-        carregarDadosCandidatura();
+        boolean deletarCandidatura = candidaturaDAO.deletarCandidatura(idLogado, candidaturaSelecionada.getIdVaga());
+        if (deletarCandidatura) {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.INFORMATION, "Confirmando exclusão...", "Exclusão confirmada e candidatura retirada.");
+            carregarDadosCandidatura();
+        } else {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível realizar exclusão da inscrição da candidatura selecionada! Tente novamente.");
+        }
     }
 
     @FXML
@@ -172,45 +185,48 @@ public class candidatoController {
         alertaConfirmacao.setHeaderText("Certeza que deseja excluir a conta?");
         alertaConfirmacao.setContentText("Esta ação não poderá ser desfeita.");
 
-        if (alertaConfirmacao.showAndWait().get() == javafx.scene.control.ButtonType.OK) {
-            candidatoDAO.deletarCandidato(idLogado);
+        java.util.Optional<javafx.scene.control.ButtonType> resultado = alertaConfirmacao.showAndWait();
+        if (resultado.isPresent() && resultado.get() == javafx.scene.control.ButtonType.OK) {
 
-            Alert alertaSucesso = new Alert(Alert.AlertType.INFORMATION);
-            alertaSucesso.setTitle("Conta Excluída");
-            alertaSucesso.setContentText("Sua conta foi excluída com sucesso!");
-            alertaSucesso.showAndWait();
-
+            boolean deletarCandidato = candidatoDAO.deletarCandidato(idLogado);
+            if (deletarCandidato) {
+                AlertaUtil.mostrarAlerta(Alert.AlertType.INFORMATION, "Conta Excluída", "Sua conta foi excluída com sucesso!");
+                Stage stageAtual = (Stage) txtNome.getScene().getWindow();
+                stageAtual.close();
+            } else {
+                AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível excluir o perfil! Tente novamente.");
+            }
         }
     }
 
     public void carregarDadosPerfil() {
 
         Candidato candidatoLogado = candidatoDAO.consultarCandidato(idLogado);
-        txtNome.setText(candidatoLogado.getNome());                           
-        txtEmail.setText(candidatoLogado.getEmail());                         
-        txtTelefone.setText(candidatoLogado.getTelefone());                   
-        txtCpf.setText(candidatoLogado.getCpf());                             
-        txtDataNascimento.setText(candidatoLogado.getDataNascimento()); 
-        txtCidade.setText(candidatoLogado.getCidade());                
-        txtBairro.setText(candidatoLogado.getBairro());          
-        txtEstado.setText(candidatoLogado.getEstado());          
-        txtCep.setText(candidatoLogado.getCep());                
-        txtFormacao.setText(candidatoLogado.getFormacao());      
-        txtExperiencia.setText(candidatoLogado.getExperiencia());
+        if (candidatoLogado != null) {
+            txtNome.setText(candidatoLogado.getNome());                           
+            txtEmail.setText(candidatoLogado.getEmail());                         
+            txtTelefone.setText(candidatoLogado.getTelefone());                   
+            txtCpf.setText(candidatoLogado.getCpf());                             
+            txtDataNascimento.setText(candidatoLogado.getDataNascimento()); 
+            txtCidade.setText(candidatoLogado.getCidade());                
+            txtBairro.setText(candidatoLogado.getBairro());          
+            txtEstado.setText(candidatoLogado.getEstado());          
+            txtCep.setText(candidatoLogado.getCep());                
+            txtFormacao.setText(candidatoLogado.getFormacao());      
+            txtExperiencia.setText(candidatoLogado.getExperiencia());
+        } else {
+            AlertaUtil.mostrarAlerta(Alert.AlertType.ERROR, "Erro", "Não foi possível carregar os dados do perfil!");
+        }
     }
 
-    public void carregarDadosVagas() {  
-
-        VagaDAO vagaDAO = new VagaDAO();                                                       
+    public void carregarDadosVagas() {                                                     
         List<Vaga> listaDeVagas = vagaDAO.consultarTodasVagas();    
-
         ObservableList<Vaga> dadosTabelaVaga = FXCollections.observableArrayList(listaDeVagas);
         tabelaVagas.setItems(dadosTabelaVaga);                                                 
     }                                                                                          
 
     public void carregarDadosCandidatura() {
         List<Candidatura> listaDeCandidaturas = candidaturaDAO.acompanharCandidatura(idLogado);
-
         ObservableList<Candidatura> dadosTabelaCandidatura = FXCollections.observableArrayList(listaDeCandidaturas);
         tabelaCandidatura.setItems(dadosTabelaCandidatura);
     }

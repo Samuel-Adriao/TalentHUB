@@ -10,7 +10,7 @@ import com.example.model.Candidato;
 public class candidatoDAO {
 
     // Cadastra o candidato e as informções passadas para dentro do banco de dados
-    public void cadastrarCandidato(String nome, String email, String telefone, String cpf, String data_nascimento, String cidade, String bairro, String estado, String cep, String formacao, String experiencia) {
+    public boolean cadastrarCandidato(String nome, String email, String telefone, String cpf, String data_nascimento, String cidade, String bairro, String estado, String cep, String formacao, String experiencia) {
         String sql = "INSERT INTO candidatos (nome, email, telefone, cpf, data_nascimento, cidade, bairro, estado, cep, formacao, experiencia) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = Conexao.conectar(); 
@@ -31,18 +31,21 @@ public class candidatoDAO {
 
                 int linhasAfetadas = stmt.executeUpdate();
                 if (linhasAfetadas > 0) {
-                    System.out.println("Informações gravadas com sucesso!");
+                    System.out.println("Informacoes gravadas com sucesso!");
+                    return true;
                 } else {
-                    System.out.println("Erro ao gravar informações no banco!");
+                    System.out.println("Erro ao gravar informacoes no banco!");
+                    return false;
                 }
                 
         } catch (SQLException erro) {
-            System.out.println("Erro ao acessar o banco de dados!" + erro.getMessage());
+            System.out.println("Erro ao inserir informacoes no banco de dados!" + erro.getMessage());
+            return false;
         }
     }
 
     // A função desse atualizar é editar as informações do perfil do candidato depois de o login já ter sido realizado
-    public void atualizarCandidato(Candidato candidato) {
+    public boolean atualizarCandidato(Candidato candidato) {
         String sql = "UPDATE candidatos SET nome = ?, email = ?, telefone = ?, cpf = ?, data_nascimento = ?, cidade = ?, bairro = ?, estado = ?, cep = ?, formacao = ?, experiencia = ? WHERE id_candidato = ?";
 
         try (Connection conn = Conexao.conectar();
@@ -63,18 +66,21 @@ public class candidatoDAO {
 
                 int linhasAfetadas = stmt.executeUpdate();
                 if (linhasAfetadas > 0) {
-                    System.out.println("Informações gravadas com sucesso!");
+                    System.out.println("Informacoes gravadas com sucesso!");
+                    return true;
                 } else {
-                    System.out.println("Erro ao gravar informações no banco!");
+                    System.out.println("Erro ao gravar informacoes no banco!");
+                    return false;
                 }
 
         } catch (SQLException erro) {
-            System.out.println("Erro ao acessar banco de dados!" + erro.getMessage());
+            System.out.println("Erro ao atualizar dados no banco de dados!" + erro.getMessage());
+            return false;
         }
     }
 
     // O deletar serve pra apagar permanentemente o perfil do candidato do banco de dados
-    public void deletarCandidato(int id_candidato) {
+    public boolean deletarCandidato(int id_candidato) {
         String sql = "DELETE FROM candidatos WHERE id_candidato = ?";
 
         try (Connection conn = Conexao.conectar();
@@ -84,13 +90,16 @@ public class candidatoDAO {
 
                 int linhasAfetadas = stmt.executeUpdate();
                 if (linhasAfetadas > 0) {
-                    System.out.println("Informações deletadas com sucesso!");
+                    System.out.println("Informacoes deletadas com sucesso!");
+                    return true;
                 } else {
-                    System.out.println("Erro ao deletar informações!");
+                    System.out.println("Erro ao deletar informacoes!");
+                    return false;
                 }
 
         } catch (SQLException erro) {
-                System.out.println("Erro ao acessar o banco de dados!" + erro.getMessage());
+                System.out.println("Erro ao deletar dados do banco de dados!" + erro.getMessage());
+                return false;
         }
     }
 
@@ -113,11 +122,17 @@ public class candidatoDAO {
                     candidato.setTelefone(rs.getString("telefone"));
                     candidato.setCpf(rs.getString("cpf"));
                     candidato.setDataNascimento(rs.getString("data_nascimento"));
+                    candidato.setCidade(rs.getString("cidade"));
+                    candidato.setBairro(rs.getString("bairro"));
+                    candidato.setEstado(rs.getString("estado"));
+                    candidato.setCep(rs.getString("cep"));
+                    candidato.setFormacao(rs.getString("formacao"));
+                    candidato.setExperiencia(rs.getString("experiencia"));
                 }                
             }     
                 
         } catch (SQLException erro) {
-            System.out.println("Erro ao acessar banco de dados!" + erro.getMessage());
+            System.out.println("Erro ao consultar candidato no banco de dados!" + erro.getMessage());
         }
         return candidato;
     }
