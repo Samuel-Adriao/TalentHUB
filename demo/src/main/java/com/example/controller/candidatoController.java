@@ -58,6 +58,9 @@ public class candidatoController {
     private CandidaturaDAO candidaturaDAO = new CandidaturaDAO();
     private VagaDAO vagaDAO = new VagaDAO();
 
+    //Iicializa o sistema, buscando o id logado e redirecionando o sistema
+    //Se o id for válidado, os dados são atribuidos as respectivas colunas das vagas e candidaturas
+    //Por fim, são chamados os métodos de carregar, trazendo todas informações em uma interface visual
     @FXML
     public void initialize() {
 
@@ -91,6 +94,7 @@ public class candidatoController {
             carregarDadosCandidatura();
     }
 
+    //Esse método serve para salvar os dados do perfil, caso o usuário altere e clique no botão salvar
     @FXML 
     private void handleSalvar() {
         String nome = txtNome.getText();
@@ -138,6 +142,9 @@ public class candidatoController {
             }
     } 
 
+    //Esse método serve para o usuário se inscrever em alguma vaga
+    //Se a vaga for inválida, a inscrição não é realizada, trazendo a interface de erro
+    //Se a vaga for válida, a inscrição é completada, trazendo a interface de confirmação
     @FXML 
     private void handleCandidatar() {
 
@@ -164,6 +171,8 @@ public class candidatoController {
         }
     }
 
+    //Esse método serve para cancelar uma candidatura realizada pelo usuário
+    //Se a candidatura selecionada for válida, o usuário é capaz de cancelar
     @FXML 
     private void handleCancelarCandidatura() {
         Candidatura candidaturaSelecionada = tabelaCandidatura.getSelectionModel().getSelectedItem();
@@ -181,6 +190,8 @@ public class candidatoController {
         }
     }
 
+    //Esse método é responsável por excluir o perfil do usuário, caso ele solicite
+    //Se a exclusão for confirmada, o perfil é apagado do sistema, junto com todas as candidaturas realizadas
     @FXML
     private void handleExcluirPerfil() {
         Alert alertaConfirmacao = new Alert(Alert.AlertType.CONFIRMATION);
@@ -202,6 +213,7 @@ public class candidatoController {
         }
     }
 
+    //Esse método vai trazer as informações do perfil, e atribuir aos seus respectivos lugares quando o sistema inicializar
     public void carregarDadosPerfil() {
 
         Candidato candidatoLogado = candidatoDAO.consultarCandidato(idLogado);
@@ -222,12 +234,14 @@ public class candidatoController {
         }
     }
 
+    //Esse método vai trazer as informações das vagas, completando a interface quando o sistema inicializar
     public void carregarDadosVagas() {                                                     
         List<Vaga> listaDeVagas = vagaDAO.consultarTodasVagas();    
         ObservableList<Vaga> dadosTabelaVaga = FXCollections.observableArrayList(listaDeVagas);
         tabelaVagas.setItems(dadosTabelaVaga);                                                 
     }                                                                                          
 
+    //Esse método vai trazer as informações das candidaturas, caso alguma tenha sido realizada, também quando o sistema inicializar
     public void carregarDadosCandidatura() {
         List<Candidatura> listaDeCandidaturas = candidaturaDAO.acompanharCandidatura(idLogado);
         ObservableList<Candidatura> dadosTabelaCandidatura = FXCollections.observableArrayList(listaDeCandidaturas);

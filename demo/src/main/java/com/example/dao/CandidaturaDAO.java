@@ -95,6 +95,8 @@ public class CandidaturaDAO {
 
     }
 
+    // Método responsável por verificar se o candidato se inscreveu em alguma candidatura, verificando id candidato e id vaga, e vendo se a candidatura possui ambos id's
+    // Serve para não permitir o candidato de se inscrever na mesma vaga mais de uma vez
     public boolean verificarCandidaturaExistente(int id_candidato, int idVaga) {
         String sql = "SELECT COUNT(id_candidatura) AS total FROM candidatura WHERE id_candidato = ? AND id_vaga = ?";
 

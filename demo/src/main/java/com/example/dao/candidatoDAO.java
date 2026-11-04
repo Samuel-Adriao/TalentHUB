@@ -44,7 +44,7 @@ public class candidatoDAO {
         }
     }
 
-    // A função desse atualizar é editar as informações do perfil do candidato depois de o login já ter sido realizado
+    // A função desse método atualizar é editar as informações do perfil do candidato depois de o login já ter sido realizado
     public boolean atualizarCandidato(Candidato candidato) {
         String sql = "UPDATE candidatos SET nome = ?, email = ?, telefone = ?, cpf = ?, data_nascimento = ?, cidade = ?, bairro = ?, estado = ?, cep = ?, formacao = ?, experiencia = ? WHERE id_candidato = ?";
 
